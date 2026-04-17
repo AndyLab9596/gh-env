@@ -8,7 +8,7 @@ on:
 env:
   MONGODB_DB_NAME: gha-demo
   MONGODB_USERNAME: andy
-  MONGODB_PASSWORD:
+  MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
   PORT: 8000
 jobs:
   test:
@@ -24,8 +24,8 @@ jobs:
           key: npm-deps-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
-      - name: Run server
-        run: npm start & npx wait-on http://127.0.0.1:$PORT
+      # - name: Run server
+      #   run: npm start & npx wait-on http://127.0.0.1:$PORT
       - name: Run tests
         run: npm test
       - name: Output information
@@ -38,3 +38,4 @@ jobs:
         run: |        
           echo "MONGODB_USERNAME:${{env.MONGODB_USERNAME}}"
           echo"PORT:${{env.PORT}}"
+          echo"${{ env.MONGODB_PASSWORD }}""
